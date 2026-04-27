@@ -24,47 +24,21 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--gray2);min-heig
 .dash{display:grid;grid-template-rows:auto auto 1fr;min-height:100vh;}
  
 /* TOP BAR */
-.topbar{
-  background:linear-gradient(135deg,#0B1F3A 0%,#1A3A6B 60%,#1e4080 100%);
-  padding:0 2rem;display:flex;align-items:center;justify-content:space-between;
-  height:70px;position:relative;overflow:hidden;
-}
-.topbar::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 80% 50%,rgba(37,99,235,0.3),transparent 60%);
-  pointer-events:none;
-}
+.topbar{background:linear-gradient(135deg,#0B1F3A 0%,#1A3A6B 60%,#1e4080 100%);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:70px;position:relative;overflow:hidden;}
+.topbar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(37,99,235,0.3),transparent 60%);pointer-events:none;}
 .topbar-left{display:flex;align-items:center;gap:14px;z-index:1;}
-.logo-box{
-  width:42px;height:42px;
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.2);
-  border-radius:10px;display:flex;align-items:center;justify-content:center;
-}
+.logo-box{width:42px;height:42px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;}
 .logo-box svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .topbar h1{font-size:18px;font-weight:700;color:#fff;letter-spacing:-0.3px;}
 .topbar p{font-size:12px;color:rgba(255,255,255,0.55);margin-top:1px;}
-.topbar-right{display:flex;align-items:center;gap:10px;z-index:1;}
-.date-pill{
-  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
-  border-radius:20px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,0.8);
-}
+.topbar-right{z-index:1;}
+.date-pill{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,0.8);}
  
-/* STAT CARDS */
-.stats-row{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:14px;padding:1.25rem 1.75rem;background:var(--blue-dark);
-}
-.stat-card{
-  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
-  border-radius:var(--radius);padding:1rem 1.2rem;
-  position:relative;overflow:hidden;transition:background 0.2s;
-}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:1.25rem 1.75rem;background:var(--blue-dark);}
+.stat-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:1rem 1.2rem;position:relative;overflow:hidden;transition:background 0.2s;}
 .stat-card:hover{background:rgba(255,255,255,0.1);}
-.stat-card::before{
-  content:'';position:absolute;top:-20px;right:-20px;
-  width:70px;height:70px;border-radius:50%;opacity:0.12;
-}
+.stat-card::before{content:'';position:absolute;top:-20px;right:-20px;width:70px;height:70px;border-radius:50%;opacity:0.12;}
 .stat-card.s-blue::before{background:#2563EB;}
 .stat-card.s-teal::before{background:#0D9488;}
 .stat-card.s-amber::before{background:#D97706;}
@@ -78,153 +52,97 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--gray2);min-heig
 .stat-val{font-size:28px;font-weight:700;color:#fff;line-height:1;}
 .stat-lbl{font-size:11px;color:rgba(255,255,255,0.5);margin-top:5px;text-transform:uppercase;letter-spacing:0.7px;}
  
-/* MAIN CONTENT */
-.content{
-  display:grid;grid-template-columns:355px 1fr;
-  gap:16px;padding:1.25rem 1.75rem 2rem;align-items:start;
-}
+/* CONTENT */
+.content{display:grid;grid-template-columns:355px 1fr;gap:16px;padding:1.25rem 1.75rem 2rem;align-items:start;}
  
 /* FORM CARD */
 .form-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
 .card-hdr{padding:1rem 1.25rem 0.85rem;border-bottom:1px solid var(--gray3);display:flex;align-items:center;gap:10px;}
 .card-hdr .hicon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .card-hdr .hicon svg{width:15px;height:15px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.hicon-blue{background:var(--blue-light);}
-.hicon-blue svg{stroke:var(--blue-accent);}
-.hicon-purple{background:var(--purple-light);}
-.hicon-purple svg{stroke:var(--purple);}
+.hicon-blue{background:var(--blue-light);} .hicon-blue svg{stroke:var(--blue-accent);}
+.hicon-purple{background:var(--purple-light);} .hicon-purple svg{stroke:var(--purple);}
 .card-hdr h2{font-size:14px;font-weight:600;color:var(--gray7);}
 .card-hdr p{font-size:11px;color:var(--gray4);}
 .form-body{padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:13px;}
 label{font-size:11.5px;font-weight:600;color:var(--gray5);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:5px;}
 .lbl-optional{font-size:10px;font-weight:400;color:var(--gray4);margin-left:6px;text-transform:none;letter-spacing:0;}
-input,select{
-  width:100%;padding:9px 11px;font-size:13.5px;
-  border:1.5px solid var(--gray3);border-radius:var(--radius-sm);
-  background:var(--gray1);color:var(--gray7);
-  font-family:'Plus Jakarta Sans',sans-serif;
-  transition:border-color 0.15s,box-shadow 0.15s;
-}
-input:focus,select:focus{
-  outline:none;border-color:var(--blue-accent);
-  box-shadow:0 0 0 3px rgba(37,99,235,0.1);background:var(--white);
-}
+input,select{width:100%;padding:9px 11px;font-size:13.5px;border:1.5px solid var(--gray3);border-radius:var(--radius-sm);background:var(--gray1);color:var(--gray7);font-family:'Plus Jakarta Sans',sans-serif;transition:border-color 0.15s,box-shadow 0.15s;}
+input:focus,select:focus{outline:none;border-color:var(--blue-accent);box-shadow:0 0 0 3px rgba(37,99,235,0.1);background:var(--white);}
 .input-optional{border-style:dashed;background:var(--gray2);}
 .input-optional:focus{border-style:solid;}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.type-toggle{
-  display:flex;gap:0;border:1.5px solid var(--gray3);
-  border-radius:var(--radius-sm);overflow:hidden;background:var(--gray2);
-}
-.tt-btn{
-  flex:1;padding:8px 0;font-size:13px;font-weight:600;
-  border:none;background:transparent;cursor:pointer;
-  transition:all 0.15s;color:var(--gray5);font-family:'Plus Jakarta Sans',sans-serif;
-}
+.type-toggle{display:flex;border:1.5px solid var(--gray3);border-radius:var(--radius-sm);overflow:hidden;background:var(--gray2);}
+.tt-btn{flex:1;padding:8px 0;font-size:13px;font-weight:600;border:none;background:transparent;cursor:pointer;transition:all 0.15s;color:var(--gray5);font-family:'Plus Jakarta Sans',sans-serif;}
 .tt-btn.on-qr{background:var(--blue-dark);color:#fff;}
 .tt-btn.on-pos{background:var(--teal);color:#fff;}
-.qty-box{
-  display:flex;align-items:center;gap:8px;padding:9px 11px;
-  background:var(--gray2);border:1.5px solid var(--gray3);border-radius:var(--radius-sm);
-}
+.qty-box{display:flex;align-items:center;gap:8px;padding:9px 11px;background:var(--gray2);border:1.5px solid var(--gray3);border-radius:var(--radius-sm);}
 .qty-num{font-size:22px;font-weight:700;color:var(--gray7);}
 .qty-txt{font-size:12px;color:var(--gray4);}
 .qty-dot{width:8px;height:8px;border-radius:50%;background:var(--green);margin-left:auto;}
-.activ-note{
-  display:flex;align-items:flex-start;gap:8px;
-  background:var(--amber-light);border:1px solid #fde68a;
-  border-radius:var(--radius-sm);padding:9px 11px;
-  font-size:12px;color:#92400e;line-height:1.45;
-}
+.activ-note{display:flex;align-items:flex-start;gap:8px;background:var(--amber-light);border:1px solid #fde68a;border-radius:var(--radius-sm);padding:9px 11px;font-size:12px;color:#92400e;line-height:1.45;}
 .activ-note svg{width:14px;height:14px;stroke:#D97706;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:1px;}
-.btn-submit{
-  width:100%;padding:11px;font-size:14px;font-weight:700;
-  background:linear-gradient(135deg,var(--blue-accent),#1d4ed8);
-  color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;
-  font-family:'Plus Jakarta Sans',sans-serif;
-  transition:opacity 0.15s,transform 0.1s;
-} 
+.btn-submit{width:100%;padding:11px;font-size:14px;font-weight:700;background:linear-gradient(135deg,var(--blue-accent),#1d4ed8);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:opacity 0.15s,transform 0.1s;}
 .btn-submit:hover{opacity:0.92;}
 .btn-submit:active{transform:scale(0.99);}
 .err{font-size:11px;color:var(--red);margin-top:3px;display:none;}
  
-/* TABLE CARD */
+/* TABLE */
 .table-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
-.table-header{
-  padding:1rem 1.25rem;border-bottom:1px solid var(--gray3);
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
-}
-.filter-bar{
-  display:flex;gap:8px;padding:0.85rem 1.25rem;
-  border-bottom:1px solid var(--gray3);background:var(--gray1);
-}
-.filter-bar input{flex:1;font-size:13px;padding:7px 10px;}
-.filter-bar select{width:150px;font-size:13px;padding:7px 10px;}
+.table-header{padding:1rem 1.25rem;border-bottom:1px solid var(--gray3);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.filter-bar{display:flex;gap:8px;padding:0.85rem 1.25rem;border-bottom:1px solid var(--gray3);background:var(--gray1);flex-wrap:wrap;}
+.filter-bar input{flex:1;min-width:160px;font-size:13px;padding:7px 10px;}
+.filter-bar select{width:145px;font-size:13px;padding:7px 10px;}
 .tbl-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;}
 thead{background:var(--gray1);}
-th{
-  padding:9px 12px;text-align:left;font-size:11px;font-weight:700;
-  color:var(--gray5);text-transform:uppercase;letter-spacing:0.5px;
-  border-bottom:1px solid var(--gray3);white-space:nowrap;
-}
-td{padding:9px 12px;font-size:13px;color:var(--gray6);border-bottom:1px solid var(--gray3);vertical-align:middle;}
+th{padding:9px 10px;text-align:left;font-size:11px;font-weight:700;color:var(--gray5);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--gray3);white-space:nowrap;}
+td{padding:9px 10px;font-size:13px;color:var(--gray6);border-bottom:1px solid var(--gray3);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tbody tr:hover td{background:#f8faff;}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600;}
 .badge::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.b-qr{background:var(--blue-light);color:#1d4ed8;}
-.b-qr::before{background:#2563EB;}
-.b-pos{background:var(--teal-light);color:#0f766e;}
-.b-pos::before{background:var(--teal);}
-.code-cell{
-  font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:500;
-  color:var(--gray7);background:var(--gray2);padding:3px 8px;border-radius:5px;display:inline-block;
-}
-.pending-badge{
-  display:inline-flex;align-items:center;gap:4px;padding:3px 9px;
-  border-radius:20px;font-size:11px;font-weight:600;
-  background:var(--amber-light);color:var(--amber);border:1px dashed #fbbf24;
-}
+.b-qr{background:var(--blue-light);color:#1d4ed8;} .b-qr::before{background:#2563EB;}
+.b-pos{background:var(--teal-light);color:#0f766e;} .b-pos::before{background:var(--teal);}
+.code-cell{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--gray7);background:var(--gray2);padding:3px 8px;border-radius:5px;display:inline-block;}
+.pending-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;background:var(--amber-light);color:var(--amber);border:1px dashed #fbbf24;}
+.oficina-tag{font-size:11px;background:var(--purple-light);color:var(--purple);padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap;}
 .activ-inline{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
-.activ-input{
-  width:130px;padding:4px 7px;font-size:12px;
-  border:1.5px solid var(--gray3);border-radius:6px;
-  background:var(--gray1);color:var(--gray7);font-family:'Plus Jakarta Sans',sans-serif;
-}
+.activ-input{width:120px;padding:4px 7px;font-size:12px;border:1.5px solid var(--gray3);border-radius:6px;background:var(--gray1);color:var(--gray7);font-family:'Plus Jakarta Sans',sans-serif;}
 .activ-input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px rgba(13,148,136,0.12);}
-.save-btn{
-  width:26px;height:26px;background:var(--green-light);
-  border:none;border-radius:6px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
+.save-btn{width:26px;height:26px;background:var(--green-light);border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .save-btn svg{width:13px;height:13px;stroke:var(--green);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
-.del-btn{
-  width:28px;height:28px;background:var(--red-light);border:none;
-  border-radius:6px;cursor:pointer;display:flex;align-items:center;
-  justify-content:center;transition:background 0.15s;
-}
+.del-btn{width:28px;height:28px;background:var(--red-light);border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
 .del-btn:hover{background:#fca5a5;}
 .del-btn svg{width:13px;height:13px;stroke:var(--red);fill:none;stroke-width:2;stroke-linecap:round;}
+.edit-btn{width:28px;height:28px;background:var(--blue-light);border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
+.edit-btn:hover{background:#bfdbfe;}
+.edit-btn svg{width:13px;height:13px;stroke:var(--blue-accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .actions-cell{display:flex;gap:5px;align-items:center;}
-.empty-row td{text-align:center;padding:3rem;color:var(--gray4);font-size:13px;}
-.num-badge{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:20px;height:20px;background:var(--gray3);border-radius:50%;
-  font-size:11px;font-weight:600;color:var(--gray5);
-}
+.num-badge{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:var(--gray3);border-radius:50%;font-size:11px;font-weight:600;color:var(--gray5);}
+ 
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.55);backdrop-filter:blur(3px);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,0.2);width:100%;max-width:500px;overflow:hidden;animation:slideUp 0.2s ease;}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-hdr{padding:1.1rem 1.25rem;border-bottom:1px solid var(--gray3);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#f8fafc,#f1f5f9);}
+.modal-hdr h3{font-size:15px;font-weight:700;color:var(--gray7);}
+.modal-hdr p{font-size:12px;color:var(--gray4);margin-top:2px;}
+.modal-close{width:30px;height:30px;background:var(--gray2);border:none;border-radius:7px;cursor:pointer;font-size:16px;color:var(--gray5);display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:var(--gray3);}
+.modal-body{padding:1.25rem;display:flex;flex-direction:column;gap:13px;}
+.modal-footer{padding:1rem 1.25rem;border-top:1px solid var(--gray3);display:flex;gap:8px;justify-content:flex-end;background:var(--gray1);}
+.btn-cancel{padding:8px 18px;font-size:13px;font-weight:600;background:var(--white);border:1.5px solid var(--gray3);border-radius:var(--radius-sm);cursor:pointer;color:var(--gray6);font-family:'Plus Jakarta Sans',sans-serif;}
+.btn-cancel:hover{background:var(--gray2);}
+.btn-save-modal{padding:8px 20px;font-size:13px;font-weight:700;background:linear-gradient(135deg,var(--blue-accent),#1d4ed8);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+.btn-save-modal:hover{opacity:0.9;}
+.modal-code-tag{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;background:var(--gray2);padding:6px 12px;border-radius:8px;color:var(--gray7);border:1px solid var(--gray3);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.info-edit{display:flex;align-items:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:8px 11px;font-size:12px;color:#1e40af;}
  
 /* RESPONSIVE */
-@media(max-width:900px){
-  .content{grid-template-columns:1fr;}
-  .stats-row{grid-template-columns:repeat(2,1fr);}
-}
-@media(max-width:500px){
-  .topbar{padding:0 1rem;}
-  .stats-row{grid-template-columns:1fr 1fr;padding:1rem;}
-  .content{padding:1rem;}
-  .filter-bar{flex-wrap:wrap;}
-}
+@media(max-width:900px){.content{grid-template-columns:1fr;}.stats-row{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:500px){.topbar{padding:0 1rem;}.stats-row{grid-template-columns:1fr 1fr;padding:1rem;}.content{padding:1rem;}}
 </style>
 </head>
 <body>
@@ -249,30 +167,22 @@ tbody tr:hover td{background:#f8faff;}
   <!-- STATS -->
   <div class="stats-row">
     <div class="stat-card s-blue">
-      <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-      </div>
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div>
       <div class="stat-val" id="st-total">0</div>
       <div class="stat-lbl">Total registros</div>
     </div>
     <div class="stat-card s-teal">
-      <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 17h1"/></svg>
-      </div>
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 17h1"/></svg></div>
       <div class="stat-val" id="st-qr">0</div>
       <div class="stat-lbl">QR Parlante</div>
     </div>
     <div class="stat-card s-amber">
-      <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-      </div>
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
       <div class="stat-val" id="st-pos">0</div>
       <div class="stat-lbl">POS</div>
     </div>
     <div class="stat-card s-orange">
-      <div class="stat-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-      </div>
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
       <div class="stat-val" id="st-pend">0</div>
       <div class="stat-lbl">Sin activar</div>
     </div>
@@ -284,16 +194,13 @@ tbody tr:hover td{background:#f8faff;}
     <!-- FORM -->
     <div class="form-card">
       <div class="card-hdr">
-        <div class="hicon hicon-blue">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        </div>
+        <div class="hicon hicon-blue"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
         <div>
           <h2>Nuevo registro</h2>
           <p>Completa los campos requeridos</p>
         </div>
       </div>
       <div class="form-body">
- 
         <div>
           <label>Tipo de equipo</label>
           <div class="type-toggle">
@@ -301,27 +208,25 @@ tbody tr:hover td{background:#f8faff;}
             <button class="tt-btn" id="btn-pos" onclick="setType('POS')">POS</button>
           </div>
         </div>
- 
         <div>
           <label>Código</label>
-          <input type="text" id="f-codigo" placeholder="Ej. QR-00001" />
+          <input type="text" id="f-codigo" placeholder="Ej. C0140758 / QR-00001" />
           <div class="err" id="err-codigo">Este campo es requerido</div>
         </div>
- 
         <div>
           <label>Responsable</label>
           <select id="f-resp">
             <option value="">— Seleccionar responsable —</option>
-            <option>ASTORGA CARCAMO, PATRICIA FRESCIA</option>
             <option>OFICINA CENTRAL COMERCIAL</option>
-            <option>PAULINO CASTRO, KEVIN DENILSON ROMARIO</option> 
-            <option>LLANOS FIGUEROA, ROCK ASTER</option>
-            <option>FLORES, MARIA</option>
+            <option>ASTORGA CARCAMO, PATRICIA FRESCIA</option>
             <option>CARRERA MEDINA, ANA HAYDE</option>
             <option>CASTILLO BLAS, ANALIZ MARILUZ</option>
+            <option>FLORES, MARIA</option>
             <option>HUAMAN CASTRO, LUIS CRISTIAN</option>
             <option>LLACCHUAS VILLANUEVA, SHEYLA MELISSA</option>
+            <option>LLANOS FIGUEROA, ROCK ASTER</option>
             <option>LOPEZ SUMALAVIA, OLIVER ENRIQUE</option>
+            <option>PAULINO CASTRO, KEVIN DENILSON ROMARIO</option>
             <option>QUINONES SILVA, ALICIA DEL CARMEN</option>
             <option>SOTO VALERIO, ANDREA BRIGITH</option>
             <option>TORRES VEGA, ROSA MARIA</option>
@@ -330,22 +235,23 @@ tbody tr:hover td{background:#f8faff;}
           </select>
           <div class="err" id="err-resp">Selecciona un responsable</div>
         </div>
- 
         <div>
-          <label>Fecha de salida</label>
-          <input type="date" id="f-salida" />
-          <div class="err" id="err-salida">Este campo es requerido</div>
+          <label>Fecha de registro</label>
+          <input type="date" id="f-registro" />
+          <div class="err" id="err-registro">Este campo es requerido</div>
         </div>
- 
         <div>
-          <label>Fecha de activación <span class="lbl-optional">— opcional, se puede agregar después</span></label>
+          <label>Fecha de salida <span class="lbl-optional">— opcional</span></label>
+          <input type="date" id="f-salida" class="input-optional" />
+        </div>
+        <div>
+          <label>Fecha de activación <span class="lbl-optional">— opcional, agregar después</span></label>
           <input type="date" id="f-activ" class="input-optional" />
           <div class="activ-note">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            Puedes dejar este campo vacío y completarlo desde la tabla cuando el equipo sea activado.
+            Puedes dejarlo vacío. Luego edita el registro con el botón ✏️ para asignar responsable y fecha de activación.
           </div>
         </div>
- 
         <div>
           <label>Cantidad</label>
           <div class="qty-box">
@@ -354,7 +260,6 @@ tbody tr:hover td{background:#f8faff;}
             <div class="qty-dot"></div>
           </div>
         </div>
- 
         <button class="btn-submit" onclick="addRow()">+ Agregar al inventario</button>
       </div>
     </div>
@@ -363,9 +268,7 @@ tbody tr:hover td{background:#f8faff;}
     <div class="table-card">
       <div class="table-header">
         <div style="display:flex;align-items:center;gap:10px;">
-          <div class="hicon hicon-purple">
-            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
+          <div class="hicon hicon-purple"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
           <div>
             <h2>Registros de inventario</h2>
             <p id="count-label">0 registros en total</p>
@@ -379,7 +282,7 @@ tbody tr:hover td{background:#f8faff;}
           <option value="QR">QR Parlante</option>
           <option value="POS">POS</option>
         </select>
-        <select id="filter-activ" onchange="renderTable()" style="width:160px;">
+        <select id="filter-activ" onchange="renderTable()">
           <option value="">Todos</option>
           <option value="pending">Sin activar</option>
           <option value="done">Activados</option>
@@ -393,160 +296,264 @@ tbody tr:hover td{background:#f8faff;}
               <th>Tipo</th>
               <th>Código</th>
               <th>Responsable</th>
+              <th>F. Registro</th>
               <th>F. Salida</th>
               <th>F. Activación</th>
               <th>Cant.</th>
-              <th></th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
         </table>
       </div>
     </div>
+  </div>
+</div>
  
+<!-- ===== MODAL EDITAR ===== -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div>
+        <h3>✏️ Editar registro</h3>
+        <p id="modal-subtitle">Modifica los datos del equipo</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-edit">
+        💡 Aquí puedes cambiar el responsable cuando el equipo sea entregado y registrar la fecha de activación.
+      </div>
+      <div>
+        <div class="modal-code-tag" id="modal-code-tag">📦 —</div>
+      </div>
+      <div>
+        <label>Tipo de equipo</label>
+        <div class="type-toggle">
+          <button class="tt-btn on-qr" id="m-btn-qr" onclick="setModalType('QR')">QR Parlante</button>
+          <button class="tt-btn" id="m-btn-pos" onclick="setModalType('POS')">POS</button>
+        </div>
+      </div>
+      <div>
+        <label>Código</label>
+        <input type="text" id="m-codigo" />
+      </div>
+      <div>
+        <label>Responsable</label>
+        <select id="m-resp">
+          <option value="">— Seleccionar responsable —</option>
+          <option>OFICINA CENTRAL COMERCIAL</option>
+          <option>ASTORGA CARCAMO, PATRICIA FRESCIA</option>
+          <option>CARRERA MEDINA, ANA HAYDE</option>
+          <option>CASTILLO BLAS, ANALIZ MARILUZ</option>
+          <option>FLORES, MARIA</option>
+          <option>HUAMAN CASTRO, LUIS CRISTIAN</option>
+          <option>LLACCHUAS VILLANUEVA, SHEYLA MELISSA</option>
+          <option>LLANOS FIGUEROA, ROCK ASTER</option>
+          <option>LOPEZ SUMALAVIA, OLIVER ENRIQUE</option>
+          <option>PAULINO CASTRO, KEVIN DENILSON ROMARIO</option>
+          <option>QUINONES SILVA, ALICIA DEL CARMEN</option>
+          <option>SOTO VALERIO, ANDREA BRIGITH</option>
+          <option>TORRES VEGA, ROSA MARIA</option>
+          <option>VASQUEZ MENDOZA, MELISSA</option>
+          <option>CHECA ARNAO, YASMIN</option>
+        </select>
+      </div>
+      <div class="row2">
+        <div>
+          <label>Fecha de registro</label>
+          <input type="date" id="m-registro" />
+        </div>
+        <div>
+          <label>Fecha de salida</label>
+          <input type="date" id="m-salida" />
+        </div>
+      </div>
+      <div>
+        <label>Fecha de activación <span class="lbl-optional">— dejar vacío si aún no se activa</span></label>
+        <input type="date" id="m-activ" class="input-optional" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save-modal" onclick="saveEdit()">💾 Guardar cambios</button>
+    </div>
   </div>
 </div>
  
 <script>
-  let records = JSON.parse(localStorage.getItem("inventario")) || [];
-  let ctype = 'QR';
-
-  function guardar() {
-    localStorage.setItem("inventario", JSON.stringify(records));
+let records = JSON.parse(localStorage.getItem('inventario_v2')) || [];
+let ctype = 'QR';
+let editId = null;
+let modalType = 'QR';
+ 
+const today = new Date();
+document.getElementById('fecha-hoy').textContent =
+  today.toLocaleDateString('es-PE',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
+const iso = today.toISOString().split('T')[0];
+document.getElementById('f-registro').value = iso;
+ 
+function guardar(){ localStorage.setItem('inventario_v2', JSON.stringify(records)); }
+function fmtDate(d){ if(!d) return null; const [y,m,dd]=d.split('-'); return dd+'/'+m+'/'+y; }
+ 
+function setType(t){
+  ctype=t;
+  document.getElementById('btn-qr').className='tt-btn'+(t==='QR'?' on-qr':'');
+  document.getElementById('btn-pos').className='tt-btn'+(t==='POS'?' on-pos':'');
+}
+function setModalType(t){
+  modalType=t;
+  document.getElementById('m-btn-qr').className='tt-btn'+(t==='QR'?' on-qr':'');
+  document.getElementById('m-btn-pos').className='tt-btn'+(t==='POS'?' on-pos':'');
+}
+ 
+function validate(){
+  let ok=true;
+  [['codigo','err-codigo'],['resp','err-resp'],['registro','err-registro']].forEach(([f,e])=>{
+    const el=document.getElementById('f-'+f);
+    const err=document.getElementById(e);
+    if(!el.value.trim()){err.style.display='block';ok=false;}
+    else err.style.display='none';
+  });
+  return ok;
+}
+ 
+function addRow(){
+  if(!validate()) return;
+  records.push({
+    id: Date.now(),
+    tipo: ctype,
+    codigo: document.getElementById('f-codigo').value.trim(),
+    resp: document.getElementById('f-resp').value,
+    registro: document.getElementById('f-registro').value,
+    salida: document.getElementById('f-salida').value || '',
+    activ: document.getElementById('f-activ').value || '',
+    cant: 1
+  });
+  guardar();
+  document.getElementById('f-codigo').value='';
+  document.getElementById('f-resp').value='';
+  document.getElementById('f-registro').value=iso;
+  document.getElementById('f-salida').value='';
+  document.getElementById('f-activ').value='';
+  updateStats(); renderTable();
+}
+ 
+function openEdit(id){
+  const r=records.find(x=>x.id===id);
+  if(!r) return;
+  editId=id;
+  document.getElementById('modal-subtitle').textContent='Equipo: '+r.codigo;
+  document.getElementById('modal-code-tag').textContent='📦 '+r.codigo+' — '+(r.tipo==='QR'?'QR Parlante':'POS');
+  document.getElementById('m-codigo').value=r.codigo;
+  document.getElementById('m-resp').value=r.resp;
+  document.getElementById('m-registro').value=r.registro||'';
+  document.getElementById('m-salida').value=r.salida||'';
+  document.getElementById('m-activ').value=r.activ||'';
+  setModalType(r.tipo);
+  document.getElementById('modal-overlay').classList.add('open');
+}
+ 
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  editId=null;
+}
+ 
+function saveEdit(){
+  const r=records.find(x=>x.id===editId);
+  if(!r) return;
+  r.tipo=modalType;
+  r.codigo=document.getElementById('m-codigo').value.trim();
+  r.resp=document.getElementById('m-resp').value;
+  r.registro=document.getElementById('m-registro').value;
+  r.salida=document.getElementById('m-salida').value;
+  r.activ=document.getElementById('m-activ').value;
+  guardar(); closeModal();
+  updateStats(); renderTable();
+}
+ 
+document.getElementById('modal-overlay').addEventListener('click',function(e){
+  if(e.target===this) closeModal();
+});
+ 
+function saveActiv(id){
+  const val=document.getElementById('ai-'+id).value;
+  const rec=records.find(r=>r.id===id);
+  if(rec){rec.activ=val; guardar();}
+  updateStats(); renderTable();
+}
+ 
+function delRow(id){
+  if(!confirm('¿Eliminar este registro? Esta acción no se puede deshacer.')) return;
+  records=records.filter(r=>r.id!==id);
+  guardar(); updateStats(); renderTable();
+}
+ 
+function updateStats(){
+  document.getElementById('st-total').textContent=records.length;
+  document.getElementById('st-qr').textContent=records.filter(r=>r.tipo==='QR').length;
+  document.getElementById('st-pos').textContent=records.filter(r=>r.tipo==='POS').length;
+  document.getElementById('st-pend').textContent=records.filter(r=>!r.activ).length;
+}
+ 
+function renderTable(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const ft=document.getElementById('filter-type').value;
+  const fa=document.getElementById('filter-activ').value;
+  const fil=records.filter(r=>{
+    const m=r.codigo.toLowerCase().includes(q)||r.resp.toLowerCase().includes(q);
+    const tm=ft?r.tipo===ft:true;
+    const am=fa==='pending'?!r.activ:fa==='done'?!!r.activ:true;
+    return m&&tm&&am;
+  });
+  document.getElementById('count-label').textContent=
+    records.length+' registro'+(records.length!==1?'s':'')+' en total';
+  const tbody=document.getElementById('tbody');
+  if(fil.length===0){
+    tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:3rem;color:#94A3B8;">
+      <div style="font-size:32px;margin-bottom:8px;">📋</div>
+      <div>No hay registros.<br>Agrega el primero con el formulario.</div>
+    </td></tr>`;
+    return;
   }
-
-  const today = new Date();
-  document.getElementById('fecha-hoy').textContent =
-    today.toLocaleDateString('es-PE', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
-
-  const iso = today.toISOString().split('T')[0];
-  document.getElementById('f-salida').value = iso;
-
-  function setType(t) {
-    ctype = t;
-    document.getElementById('btn-qr').className = 'tt-btn' + (t === 'QR' ? ' on-qr' : '');
-    document.getElementById('btn-pos').className = 'tt-btn' + (t === 'POS' ? ' on-pos' : '');
-  }
-
-  function fmtDate(d) {
-    if (!d) return null;
-    const [y, m, dd] = d.split('-');
-    return dd + '/' + m + '/' + y;
-  }
-
-  function validate() {
-    let ok = true;
-    [['codigo','err-codigo'], ['resp','err-resp'], ['salida','err-salida']].forEach(([f, e]) => {
-      const el = document.getElementById('f-' + f);
-      const err = document.getElementById(e);
-      if (!el.value.trim()) { err.style.display = 'block'; ok = false; }
-      else err.style.display = 'none';
-    });
-    return ok;
-  }
-
-  function addRow() {
-    if (!validate()) return;
-
-    records.push({
-      id: Date.now(),
-      tipo: ctype,
-      codigo: document.getElementById('f-codigo').value.trim(),
-      resp: document.getElementById('f-resp').value,
-      salida: document.getElementById('f-salida').value,
-      activ: document.getElementById('f-activ').value || '',
-      cant: 1
-    });
-
-    guardar(); // 🔥 guardar datos
-
-    document.getElementById('f-codigo').value = '';
-    document.getElementById('f-resp').value = '';
-    document.getElementById('f-salida').value = iso;
-    document.getElementById('f-activ').value = '';
-
-    updateStats();
-    renderTable();
-  }
-
-  function saveActiv(id) {
-    const val = document.getElementById('ai-' + id).value;
-    const rec = records.find(r => r.id === id);
-    if (rec) rec.activ = val;
-
-    guardar(); // 🔥 guardar cambios
-
-    updateStats();
-    renderTable();
-  }
-
-  function delRow(id) {
-    records = records.filter(r => r.id !== id);
-
-    guardar(); // 🔥 guardar cambios
-
-    updateStats();
-    renderTable();
-  }
-
-  function updateStats() {
-    const pend = records.filter(r => !r.activ).length;
-    document.getElementById('st-total').textContent = records.length;
-    document.getElementById('st-qr').textContent = records.filter(r => r.tipo === 'QR').length;
-    document.getElementById('st-pos').textContent = records.filter(r => r.tipo === 'POS').length;
-    document.getElementById('st-pend').textContent = pend;
-  }
-
-  function renderTable() {
-    const q  = document.getElementById('search').value.toLowerCase();
-    const ft = document.getElementById('filter-type').value;
-    const fa = document.getElementById('filter-activ').value;
-
-    const fil = records.filter(r => {
-      const m  = r.codigo.toLowerCase().includes(q) || r.resp.toLowerCase().includes(q);
-      const tm = ft ? r.tipo === ft : true;
-      const am = fa === 'pending' ? !r.activ : fa === 'done' ? !!r.activ : true;
-      return m && tm && am;
-    });
-
-    document.getElementById('count-label').textContent =
-      records.length + ' registro' + (records.length !== 1 ? 's' : '') + ' en total';
-
-    const tbody = document.getElementById('tbody');
-
-    if (fil.length === 0) {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="8" style="text-align:center;padding:3rem;color:#94A3B8;">
-        📋 No hay registros
-      </td></tr>`;
-      return;
-    }
-
-    tbody.innerHTML = fil.map((r, i) => {
-      const activCell = r.activ
-        ? `<span>${fmtDate(r.activ)}</span>`
-        : `<div class="activ-inline">
-             <input type="date" class="activ-input" id="ai-${r.id}" />
-             <button class="save-btn" onclick="saveActiv(${r.id})">✔</button>
-           </div>`;
-
-      return `<tr>
-        <td>${i + 1}</td>
-        <td>${r.tipo}</td>
-        <td>${r.codigo}</td>
-        <td>${r.resp}</td>
-        <td>${fmtDate(r.salida)}</td>
-        <td>${activCell}</td>
-        <td>1</td>
-        <td><button onclick="delRow(${r.id})">❌</button></td>
-      </tr>`;
-    }).join('');
-  }
-
-  // 🔥 CARGA AUTOMÁTICA AL INICIAR
-  window.onload = () => {
-    updateStats();
-    renderTable();
-  };
+  tbody.innerHTML=fil.map((r,i)=>{
+    const esOficina=r.resp==='OFICINA CENTRAL COMERCIAL';
+    const respCell=esOficina
+      ? `<span class="oficina-tag">📦 Oficina Central</span>`
+      : `<span style="font-size:12px;">${r.resp}</span>`;
+    const activCell=r.activ
+      ? `<span style="font-size:12.5px;color:#16A34A;font-weight:600;">✓ ${fmtDate(r.activ)}</span>`
+      : `<div class="activ-inline">
+           <span class="pending-badge">⏳ Pendiente</span>
+           <input type="date" class="activ-input" id="ai-${r.id}" />
+           <button class="save-btn" onclick="saveActiv(${r.id})" title="Guardar">
+             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+           </button>
+         </div>`;
+    return `<tr>
+      <td><span class="num-badge">${i+1}</span></td>
+      <td><span class="badge ${r.tipo==='QR'?'b-qr':'b-pos'}">${r.tipo==='QR'?'QR Parlante':'POS'}</span></td>
+      <td><span class="code-cell">${r.codigo}</span></td>
+      <td>${respCell}</td>
+      <td style="white-space:nowrap;font-size:12.5px;">${fmtDate(r.registro)||'—'}</td>
+      <td style="white-space:nowrap;font-size:12.5px;">${fmtDate(r.salida)||'—'}</td>
+      <td>${activCell}</td>
+      <td style="text-align:center;font-weight:600;">1</td>
+      <td>
+        <div class="actions-cell">
+          <button class="edit-btn" onclick="openEdit(${r.id})" title="Editar registro">
+            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="del-btn" onclick="delRow(${r.id})" title="Eliminar">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+ 
+window.onload=()=>{ updateStats(); renderTable(); };
 </script>
 </body>
 </html>
