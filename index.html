@@ -404,27 +404,32 @@ tbody tr:hover td{background:#f8faff;}
 </div>
  
 <script>
-  let records = [];
+  let records = JSON.parse(localStorage.getItem("inventario")) || [];
   let ctype = 'QR';
- 
+
+  function guardar() {
+    localStorage.setItem("inventario", JSON.stringify(records));
+  }
+
   const today = new Date();
   document.getElementById('fecha-hoy').textContent =
     today.toLocaleDateString('es-PE', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
+
   const iso = today.toISOString().split('T')[0];
   document.getElementById('f-salida').value = iso;
- 
+
   function setType(t) {
     ctype = t;
     document.getElementById('btn-qr').className = 'tt-btn' + (t === 'QR' ? ' on-qr' : '');
     document.getElementById('btn-pos').className = 'tt-btn' + (t === 'POS' ? ' on-pos' : '');
   }
- 
+
   function fmtDate(d) {
     if (!d) return null;
     const [y, m, dd] = d.split('-');
     return dd + '/' + m + '/' + y;
   }
- 
+
   function validate() {
     let ok = true;
     [['codigo','err-codigo'], ['resp','err-resp'], ['salida','err-salida']].forEach(([f, e]) => {
@@ -435,9 +440,10 @@ tbody tr:hover td{background:#f8faff;}
     });
     return ok;
   }
- 
+
   function addRow() {
     if (!validate()) return;
+
     records.push({
       id: Date.now(),
       tipo: ctype,
@@ -447,28 +453,38 @@ tbody tr:hover td{background:#f8faff;}
       activ: document.getElementById('f-activ').value || '',
       cant: 1
     });
+
+    guardar(); // 🔥 guardar datos
+
     document.getElementById('f-codigo').value = '';
     document.getElementById('f-resp').value = '';
     document.getElementById('f-salida').value = iso;
     document.getElementById('f-activ').value = '';
+
     updateStats();
     renderTable();
   }
- 
+
   function saveActiv(id) {
     const val = document.getElementById('ai-' + id).value;
     const rec = records.find(r => r.id === id);
     if (rec) rec.activ = val;
+
+    guardar(); // 🔥 guardar cambios
+
     updateStats();
     renderTable();
   }
- 
+
   function delRow(id) {
     records = records.filter(r => r.id !== id);
+
+    guardar(); // 🔥 guardar cambios
+
     updateStats();
     renderTable();
   }
- 
+
   function updateStats() {
     const pend = records.filter(r => !r.activ).length;
     document.getElementById('st-total').textContent = records.length;
@@ -476,61 +492,57 @@ tbody tr:hover td{background:#f8faff;}
     document.getElementById('st-pos').textContent = records.filter(r => r.tipo === 'POS').length;
     document.getElementById('st-pend').textContent = pend;
   }
- 
+
   function renderTable() {
     const q  = document.getElementById('search').value.toLowerCase();
     const ft = document.getElementById('filter-type').value;
     const fa = document.getElementById('filter-activ').value;
+
     const fil = records.filter(r => {
       const m  = r.codigo.toLowerCase().includes(q) || r.resp.toLowerCase().includes(q);
       const tm = ft ? r.tipo === ft : true;
       const am = fa === 'pending' ? !r.activ : fa === 'done' ? !!r.activ : true;
       return m && tm && am;
     });
+
     document.getElementById('count-label').textContent =
       records.length + ' registro' + (records.length !== 1 ? 's' : '') + ' en total';
+
     const tbody = document.getElementById('tbody');
+
     if (fil.length === 0) {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="8" style="text-align:center;padding:3rem;color:#94A3B8;font-size:13px;">
-        <div style="font-size:32px;margin-bottom:8px;">📋</div>
-        <div>No hay registros.<br>Agrega el primero con el formulario.</div>
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="8" style="text-align:center;padding:3rem;color:#94A3B8;">
+        📋 No hay registros
       </td></tr>`;
       return;
     }
+
     tbody.innerHTML = fil.map((r, i) => {
       const activCell = r.activ
-        ? `<span style="font-size:12.5px;color:#334155;">${fmtDate(r.activ)}</span>`
+        ? `<span>${fmtDate(r.activ)}</span>`
         : `<div class="activ-inline">
              <input type="date" class="activ-input" id="ai-${r.id}" />
-             <button class="save-btn" onclick="saveActiv(${r.id})" title="Guardar fecha">
-               <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-             </button>
+             <button class="save-btn" onclick="saveActiv(${r.id})">✔</button>
            </div>`;
+
       return `<tr>
-        <td><span class="num-badge">${i + 1}</span></td>
-        <td><span class="badge ${r.tipo === 'QR' ? 'b-qr' : 'b-pos'}">${r.tipo === 'QR' ? 'QR Parlante' : 'POS'}</span></td>
-        <td><span class="code-cell">${r.codigo}</span></td>
-        <td style="font-size:12px;max-width:170px;">${r.resp}</td>
-        <td style="white-space:nowrap;font-size:12.5px;">${fmtDate(r.salida)}</td>
-        <td>${r.activ
-          ? activCell
-          : `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-               <span class="pending-badge">⏳ Pendiente</span>${activCell}
-             </div>`}
-        </td>
-        <td style="text-align:center;font-weight:600;">1</td>
-        <td>
-          <div class="actions-cell">
-            <button class="del-btn" onclick="delRow(${r.id})" title="Eliminar">
-              <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-          </div>
-        </td>
+        <td>${i + 1}</td>
+        <td>${r.tipo}</td>
+        <td>${r.codigo}</td>
+        <td>${r.resp}</td>
+        <td>${fmtDate(r.salida)}</td>
+        <td>${activCell}</td>
+        <td>1</td>
+        <td><button onclick="delRow(${r.id})">❌</button></td>
       </tr>`;
     }).join('');
   }
- 
-  renderTable();
+
+  // 🔥 CARGA AUTOMÁTICA AL INICIAR
+  window.onload = () => {
+    updateStats();
+    renderTable();
+  };
 </script>
 </body>
 </html>
