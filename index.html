@@ -543,15 +543,40 @@ tbody tr:hover td{background:#f8faff;}
            </div>`;
 
       return `<tr>
-        <td>${i + 1}</td>
-        <td>${r.tipo}</td>
-        <td>${r.codigo}</td>
-        <td>${r.resp}</td>
-        <td>${fmtDate(r.salida)}</td>
-        <td>${activCell}</td>
-        <td>1</td>
-        <td><button onclick="delRow('${r.id}')">❌</button></td>
-      </tr>`;
+  <td>${i + 1}</td>
+
+  <td>
+    <span class="badge ${r.tipo === 'POS' ? 'badge-pos' : 'badge-qr'}">
+      ${r.tipo}
+    </span>
+  </td>
+
+  <td><strong>${r.codigo}</strong></td>
+
+  <td>
+    <span class="badge-resp">${r.resp}</span>
+  </td>
+
+  <td>${fmtDate(r.salida)}</td>
+
+  <td>
+    ${
+      r.activ
+        ? `<span class="badge-ok">${fmtDate(r.activ)}</span>`
+        : `<div class="activ-inline">
+            <span class="badge-pend">Pendiente</span>
+            <input type="date" id="ai-${r.id}" class="activ-input"/>
+            <button class="btn-ok" onclick="saveActiv('${r.id}')">✔</button>
+          </div>`
+    }
+  </td>
+
+  <td>1</td>
+
+  <td>
+    <button class="btn-del" onclick="delRow('${r.id}')">🗑</button>
+  </td>
+</tr>`;
     }).join('');
   }
 
