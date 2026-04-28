@@ -407,206 +407,75 @@ tbody tr:hover td{background:#f8faff;}
   </div>
 </div>
  
-<script type="module">
-  // 🔥 FIREBASE
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    deleteDoc,
-    doc,
-    updateDoc
-  } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+<script>
+function renderTable() {
+  const q  = document.getElementById('search').value.toLowerCase();
+  const ft = document.getElementById('filter-type').value;
+  const fa = document.getElementById('filter-activ').value;
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBlgb_-4PAtqoIUDtMZBx6Z8Kz35HeeaNg",
-    authDomain: "inventario-88244.firebaseapp.com",
-    projectId: "inventario-88244",
-    storageBucket: "inventario-88244.firebasestorage.app",
-    messagingSenderId: "512967248364",
-    appId: "1:512967248364:web:fc59d730a41f7b022658c9"
-  };
+  const fil = records.filter(r => {
+    const m  = r.codigo.toLowerCase().includes(q) || r.resp.toLowerCase().includes(q);
+    const tm = ft ? r.tipo === ft : true;
+    const am = fa === 'pending' ? !r.activ : fa === 'done' ? !!r.activ : true;
+    return m && tm && am;
+  });
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  document.getElementById('count-label').textContent =
+    records.length + ' registro' + (records.length !== 1 ? 's' : '') + ' en total';
 
-  // 🔥 VARIABLES
-  let records = [];
-  let ctype = 'QR';
+  const tbody = document.getElementById('tbody');
 
-  const today = new Date();
-  document.getElementById('fecha-hoy').textContent =
-    today.toLocaleDateString('es-PE', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
-
-  const iso = today.toISOString().split('T')[0];
-  document.getElementById('f-salida').value = iso;
-
-  function setType(t) {
-    ctype = t;
-    document.getElementById('btn-qr').className = 'tt-btn' + (t === 'QR' ? ' on-qr' : '');
-    document.getElementById('btn-pos').className = 'tt-btn' + (t === 'POS' ? ' on-pos' : '');
+  if (fil.length === 0) {
+    tbody.innerHTML = `<tr class="empty-row">
+      <td colspan="8">📋 No hay registros</td>
+    </tr>`;
+    return;
   }
 
-  function fmtDate(d) {
-    if (!d) return null;
-    const [y, m, dd] = d.split('-');
-    return dd + '/' + m + '/' + y;
-  }
+  tbody.innerHTML = fil.map((r, i) => {
+    return `<tr>
 
-  function validate() {
-    let ok = true;
-    [['codigo','err-codigo'], ['resp','err-resp'], ['salida','err-salida']].forEach(([f, e]) => {
-      const el = document.getElementById('f-' + f);
-      const err = document.getElementById(e);
-      if (!el.value.trim()) { err.style.display = 'block'; ok = false; }
-      else err.style.display = 'none';
-    });
-    return ok;
-  }
+      <td><span class="num-badge">${i + 1}</span></td>
 
-  // 🔥 AGREGAR
-  async function addRow() {
-    if (!validate()) return;
+      <td>
+        <span class="badge ${r.tipo === 'QR' ? 'b-qr' : 'b-pos'}">
+          ${r.tipo}
+        </span>
+      </td>
 
-    const nuevo = {
-      tipo: ctype,
-      codigo: document.getElementById('f-codigo').value.trim(),
-      resp: document.getElementById('f-resp').value,
-      salida: document.getElementById('f-salida').value,
-      activ: document.getElementById('f-activ').value || '',
-      cant: 1
-    };
+      <td>
+        <span class="code-cell">${r.codigo}</span>
+      </td>
 
-    await addDoc(collection(db, "inventario"), nuevo);
+      <td>
+        <span class="badge" style="background:var(--purple-light);color:var(--purple);">
+          ${r.resp}
+        </span>
+      </td>
 
-    document.getElementById('f-codigo').value = '';
-    document.getElementById('f-resp').value = '';
-    document.getElementById('f-salida').value = iso;
-    document.getElementById('f-activ').value = '';
+      <td>${fmtDate(r.salida)}</td>
 
-    loadData();
-  }
+      <td>
+        ${
+          r.activ
+            ? `<span>${fmtDate(r.activ)}</span>`
+            : `<div class="activ-inline">
+                <span class="pending-badge">⏳ Pendiente</span>
+                <input type="date" class="activ-input" id="ai-${r.id}" />
+                <button class="save-btn" onclick="saveActiv('${r.id}')">✔</button>
+              </div>`
+        }
+      </td>
 
-  // 🔥 ACTIVAR
-  async function saveActiv(id) {
-    const val = document.getElementById('ai-' + id).value;
-    await updateDoc(doc(db, "inventario", id), {
-      activ: val
-    });
-    loadData();
-  }
+      <td>1</td>
 
-  // 🔥 ELIMINAR
-  async function delRow(id) {
-    await deleteDoc(doc(db, "inventario", id));
-    loadData();
-  }
+      <td class="actions-cell">
+        <button class="del-btn" onclick="delRow('${r.id}')">✖</button>
+      </td>
 
-  function updateStats() {
-    const pend = records.filter(r => !r.activ).length;
-    document.getElementById('st-total').textContent = records.length;
-    document.getElementById('st-qr').textContent = records.filter(r => r.tipo === 'QR').length;
-    document.getElementById('st-pos').textContent = records.filter(r => r.tipo === 'POS').length;
-    document.getElementById('st-pend').textContent = pend;
-  }
-
-  function renderTable() {
-    const q  = document.getElementById('search').value.toLowerCase();
-    const ft = document.getElementById('filter-type').value;
-    const fa = document.getElementById('filter-activ').value;
-
-    const fil = records.filter(r => {
-      const m  = r.codigo.toLowerCase().includes(q) || r.resp.toLowerCase().includes(q);
-      const tm = ft ? r.tipo === ft : true;
-      const am = fa === 'pending' ? !r.activ : fa === 'done' ? !!r.activ : true;
-      return m && tm && am;
-    });
-
-    document.getElementById('count-label').textContent =
-      records.length + ' registro' + (records.length !== 1 ? 's' : '') + ' en total';
-
-    const tbody = document.getElementById('tbody');
-
-    if (fil.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:3rem;">📋 No hay registros</td></tr>`;
-      return;
-    }
-
-    tbody.innerHTML = fil.map((r, i) => {
-      const activCell = r.activ
-        ? `<span>${fmtDate(r.activ)}</span>`
-        : `<div class="activ-inline">
-             <input type="date" id="ai-${r.id}" />
-             <button onclick="saveActiv('${r.id}')">✔</button>
-           </div>`;
-
-      return `<tr>
-  <td>${i + 1}</td>
-
-  <td>
-    <span class="badge ${r.tipo === 'POS' ? 'badge-pos' : 'badge-qr'}">
-      ${r.tipo}
-    </span>
-  </td>
-
-  <td><strong>${r.codigo}</strong></td>
-
-  <td>
-    <span class="badge-resp">${r.resp}</span>
-  </td>
-
-  <td>${fmtDate(r.salida)}</td>
-
-  <td>
-    ${
-      r.activ
-        ? `<span class="badge-ok">${fmtDate(r.activ)}</span>`
-        : `<div class="activ-inline">
-            <span class="badge-pend">Pendiente</span>
-            <input type="date" id="ai-${r.id}" class="activ-input"/>
-            <button class="btn-ok" onclick="saveActiv('${r.id}')">✔</button>
-          </div>`
-    }
-  </td>
-
-  <td>1</td>
-
-  <td>
-    <button class="btn-del" onclick="delRow('${r.id}')">🗑</button>
-  </td>
-</tr>`;
-    }).join('');
-  }
-
-  // 🔥 CARGAR DATA DE FIREBASE
-  async function loadData() {
-    const querySnapshot = await getDocs(collection(db, "inventario"));
-    records = [];
-
-    querySnapshot.forEach((docu) => {
-      records.push({
-        id: docu.id,
-        ...docu.data()
-      });
-    });
-
-    updateStats();
-    renderTable();
-  }
-
-  // 🔥 INICIO
-  window.onload = () => {
-    loadData();
-  };
-
-  // 🔥 HACER FUNCIONES GLOBALES
-  window.addRow = addRow;
-  window.saveActiv = saveActiv;
-  window.delRow = delRow;
-  window.setType = setType;
-
+    </tr>`;
+  }).join('');
+}
 </script>
 </body>
 </html>
