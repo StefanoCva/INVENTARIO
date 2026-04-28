@@ -381,179 +381,74 @@ tbody tr:hover td{background:#f8faff;}
   </div>
 </div>
  
-<script>
-let records = JSON.parse(localStorage.getItem('inventario_v2')) || [];
-let ctype = 'QR';
-let editId = null;
-let modalType = 'QR';
- 
-const today = new Date();
-document.getElementById('fecha-hoy').textContent =
-  today.toLocaleDateString('es-PE',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
-const iso = today.toISOString().split('T')[0];
-document.getElementById('f-registro').value = iso;
- 
-function guardar(){ localStorage.setItem('inventario_v2', JSON.stringify(records)); }
-function fmtDate(d){ if(!d) return null; const [y,m,dd]=d.split('-'); return dd+'/'+m+'/'+y; }
- 
-function setType(t){
-  ctype=t;
-  document.getElementById('btn-qr').className='tt-btn'+(t==='QR'?' on-qr':'');
-  document.getElementById('btn-pos').className='tt-btn'+(t==='POS'?' on-pos':'');
-}
-function setModalType(t){
-  modalType=t;
-  document.getElementById('m-btn-qr').className='tt-btn'+(t==='QR'?' on-qr':'');
-  document.getElementById('m-btn-pos').className='tt-btn'+(t==='POS'?' on-pos':'');
-}
- 
-function validate(){
-  let ok=true;
-  [['codigo','err-codigo'],['resp','err-resp'],['registro','err-registro']].forEach(([f,e])=>{
-    const el=document.getElementById('f-'+f);
-    const err=document.getElementById(e);
-    if(!el.value.trim()){err.style.display='block';ok=false;}
-    else err.style.display='none';
-  });
-  return ok;
-}
- 
-function addRow(){
-  if(!validate()) return;
-  records.push({
-    id: Date.now(),
-    tipo: ctype,
-    codigo: document.getElementById('f-codigo').value.trim(),
-    resp: document.getElementById('f-resp').value,
-    registro: document.getElementById('f-registro').value,
-    salida: document.getElementById('f-salida').value || '',
-    activ: document.getElementById('f-activ').value || '',
-    cant: 1
-  });
-  guardar();
-  document.getElementById('f-codigo').value='';
-  document.getElementById('f-resp').value='';
-  document.getElementById('f-registro').value=iso;
-  document.getElementById('f-salida').value='';
-  document.getElementById('f-activ').value='';
-  updateStats(); renderTable();
-}
- 
-function openEdit(id){
-  const r=records.find(x=>x.id===id);
-  if(!r) return;
-  editId=id;
-  document.getElementById('modal-subtitle').textContent='Equipo: '+r.codigo;
-  document.getElementById('modal-code-tag').textContent='📦 '+r.codigo+' — '+(r.tipo==='QR'?'QR Parlante':'POS');
-  document.getElementById('m-codigo').value=r.codigo;
-  document.getElementById('m-resp').value=r.resp;
-  document.getElementById('m-registro').value=r.registro||'';
-  document.getElementById('m-salida').value=r.salida||'';
-  document.getElementById('m-activ').value=r.activ||'';
-  setModalType(r.tipo);
-  document.getElementById('modal-overlay').classList.add('open');
-}
- 
-function closeModal(){
-  document.getElementById('modal-overlay').classList.remove('open');
-  editId=null;
-}
- 
-function saveEdit(){
-  const r=records.find(x=>x.id===editId);
-  if(!r) return;
-  r.tipo=modalType;
-  r.codigo=document.getElementById('m-codigo').value.trim();
-  r.resp=document.getElementById('m-resp').value;
-  r.registro=document.getElementById('m-registro').value;
-  r.salida=document.getElementById('m-salida').value;
-  r.activ=document.getElementById('m-activ').value;
-  guardar(); closeModal();
-  updateStats(); renderTable();
-}
- 
-document.getElementById('modal-overlay').addEventListener('click',function(e){
-  if(e.target===this) closeModal();
-});
- 
-function saveActiv(id){
-  const val=document.getElementById('ai-'+id).value;
-  const rec=records.find(r=>r.id===id);
-  if(rec){rec.activ=val; guardar();}
-  updateStats(); renderTable();
-}
- 
-function delRow(id){
-  if(!confirm('¿Eliminar este registro? Esta acción no se puede deshacer.')) return;
-  records=records.filter(r=>r.id!==id);
-  guardar(); updateStats(); renderTable();
-}
- 
-function updateStats(){
-  document.getElementById('st-total').textContent=records.length;
-  document.getElementById('st-qr').textContent=records.filter(r=>r.tipo==='QR').length;
-  document.getElementById('st-pos').textContent=records.filter(r=>r.tipo==='POS').length;
-  document.getElementById('st-pend').textContent=records.filter(r=>!r.activ).length;
-}
- 
-function renderTable(){
-  const q=document.getElementById('search').value.toLowerCase();
-  const ft=document.getElementById('filter-type').value;
-  const fa=document.getElementById('filter-activ').value;
-  const fil=records.filter(r=>{
-    const m=r.codigo.toLowerCase().includes(q)||r.resp.toLowerCase().includes(q);
-    const tm=ft?r.tipo===ft:true;
-    const am=fa==='pending'?!r.activ:fa==='done'?!!r.activ:true;
-    return m&&tm&&am;
-  });
-  document.getElementById('count-label').textContent=
-    records.length+' registro'+(records.length!==1?'s':'')+' en total';
-  const tbody=document.getElementById('tbody');
-  if(fil.length===0){
-    tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:3rem;color:#94A3B8;">
-      <div style="font-size:32px;margin-bottom:8px;">📋</div>
-      <div>No hay registros.<br>Agrega el primero con el formulario.</div>
-    </td></tr>`;
-    return;
+<script type="module">
+  // 🔥 Importar Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs } 
+    from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+  // 🔥 Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBlgb_-4PAtqoIUDtMZBx6Z8Kz35HeeaNg",
+    authDomain: "inventario-88244.firebaseapp.com",
+    projectId: "inventario-88244",
+    storageBucket: "inventario-88244.firebasestorage.app",
+    messagingSenderId: "512967248364",
+    appId: "1:512967248364:web:fc59d730a41f7b022658c9",
+    measurementId: "G-P70M0JQ493"
+  };
+
+  // 🔥 Inicializar
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // 🔥 FUNCIÓN PARA GUARDAR
+  window.addRow = async function () {
+    const codigo = document.getElementById('f-codigo').value;
+    const resp = document.getElementById('f-resp').value;
+    const salida = document.getElementById('f-salida').value;
+
+    if (!codigo || !resp || !salida) {
+      alert("Completa los campos");
+      return;
+    }
+
+    await addDoc(collection(db, "inventario"), {
+      codigo,
+      resp,
+      salida,
+      fecha: new Date()
+    });
+
+    renderTable();
+  };
+
+  // 🔥 FUNCIÓN PARA CARGAR DATOS
+  async function renderTable() {
+    const querySnapshot = await getDocs(collection(db, "inventario"));
+    const tbody = document.getElementById("tbody");
+
+    let html = "";
+
+    querySnapshot.forEach((doc, i) => {
+      const d = doc.data();
+
+      html += `
+        <tr>
+          <td>${i+1}</td>
+          <td>${d.codigo}</td>
+          <td>${d.resp}</td>
+          <td>${d.salida}</td>
+        </tr>
+      `;
+    });
+
+    tbody.innerHTML = html;
   }
-  tbody.innerHTML=fil.map((r,i)=>{
-    const esOficina=r.resp==='OFICINA CENTRAL COMERCIAL';
-    const respCell=esOficina
-      ? `<span class="oficina-tag">📦 Oficina Central</span>`
-      : `<span style="font-size:12px;">${r.resp}</span>`;
-    const activCell=r.activ
-      ? `<span style="font-size:12.5px;color:#16A34A;font-weight:600;">✓ ${fmtDate(r.activ)}</span>`
-      : `<div class="activ-inline">
-           <span class="pending-badge">⏳ Pendiente</span>
-           <input type="date" class="activ-input" id="ai-${r.id}" />
-           <button class="save-btn" onclick="saveActiv(${r.id})" title="Guardar">
-             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-           </button>
-         </div>`;
-    return `<tr>
-      <td><span class="num-badge">${i+1}</span></td>
-      <td><span class="badge ${r.tipo==='QR'?'b-qr':'b-pos'}">${r.tipo==='QR'?'QR Parlante':'POS'}</span></td>
-      <td><span class="code-cell">${r.codigo}</span></td>
-      <td>${respCell}</td>
-      <td style="white-space:nowrap;font-size:12.5px;">${fmtDate(r.registro)||'—'}</td>
-      <td style="white-space:nowrap;font-size:12.5px;">${fmtDate(r.salida)||'—'}</td>
-      <td>${activCell}</td>
-      <td style="text-align:center;font-weight:600;">1</td>
-      <td>
-        <div class="actions-cell">
-          <button class="edit-btn" onclick="openEdit(${r.id})" title="Editar registro">
-            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </button>
-          <button class="del-btn" onclick="delRow(${r.id})" title="Eliminar">
-            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-          </button>
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-}
- 
-window.onload=()=>{ updateStats(); renderTable(); };
+
+  // 🔥 CARGAR AL INICIAR
+  window.onload = renderTable;
+
 </script>
 </body>
 </html>
