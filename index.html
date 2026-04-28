@@ -14,7 +14,7 @@
   --red:#DC2626;--red-light:#FEE2E2;
   --green:#16A34A;--green-light:#DCFCE7;
   --purple:#7C3AED;--purple-light:#EDE9FE;
-  --orange:#EA580C;--orange-light:#FFEDD5;
+  --orange:#EA580C;
   --gray1:#F8FAFC;--gray2:#F1F5F9;--gray3:#E2E8F0;--gray4:#94A3B8;
   --gray5:#64748B;--gray6:#334155;--gray7:#1E293B;
   --white:#FFFFFF;--radius:12px;--radius-sm:8px;
@@ -22,8 +22,7 @@
 }
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--gray2);min-height:100vh;}
 .dash{display:grid;grid-template-rows:auto auto 1fr;min-height:100vh;}
- 
-/* TOP BAR */
+
 .topbar{background:linear-gradient(135deg,#0B1F3A 0%,#1A3A6B 60%,#1e4080 100%);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:70px;position:relative;overflow:hidden;}
 .topbar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(37,99,235,0.3),transparent 60%);pointer-events:none;}
 .topbar-left{display:flex;align-items:center;gap:14px;z-index:1;}
@@ -33,35 +32,34 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--gray2);min-heig
 .topbar p{font-size:12px;color:rgba(255,255,255,0.55);margin-top:1px;}
 .topbar-right{display:flex;align-items:center;gap:10px;z-index:1;}
 .date-pill{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,0.8);}
- 
-/* STATS */
+.sync-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:5px 12px;}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#6b7280;transition:background 0.3s;}
+.sync-dot.online{background:#22c55e;box-shadow:0 0 6px #22c55e;}
+.sync-dot.offline{background:#f87171;}
+.sync-dot.loading{background:#f59e0b;animation:blink 0.8s ease infinite alternate;}
+@keyframes blink{from{opacity:0.4;}to{opacity:1;}}
+.sync-label{font-size:11px;color:rgba(255,255,255,0.7);}
+
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:1.25rem 1.75rem;background:var(--blue-dark);}
 .stat-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:1rem 1.2rem;position:relative;overflow:hidden;transition:background 0.2s;}
 .stat-card:hover{background:rgba(255,255,255,0.1);}
 .stat-card::before{content:'';position:absolute;top:-20px;right:-20px;width:70px;height:70px;border-radius:50%;opacity:0.12;}
-.stat-card.s-blue::before{background:#2563EB;}
-.stat-card.s-teal::before{background:#0D9488;}
-.stat-card.s-amber::before{background:#D97706;}
-.stat-card.s-orange::before{background:#EA580C;}
+.s-blue::before{background:#2563EB;}.s-teal::before{background:#0D9488;}.s-amber::before{background:#D97706;}.s-orange::before{background:#EA580C;}
 .stat-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
 .stat-icon svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.s-blue .stat-icon{background:rgba(37,99,235,0.7);}
-.s-teal .stat-icon{background:rgba(13,148,136,0.7);}
-.s-amber .stat-icon{background:rgba(217,119,6,0.7);}
-.s-orange .stat-icon{background:rgba(234,88,12,0.7);}
+.s-blue .stat-icon{background:rgba(37,99,235,0.7);}.s-teal .stat-icon{background:rgba(13,148,136,0.7);}
+.s-amber .stat-icon{background:rgba(217,119,6,0.7);}.s-orange .stat-icon{background:rgba(234,88,12,0.7);}
 .stat-val{font-size:28px;font-weight:700;color:#fff;line-height:1;}
 .stat-lbl{font-size:11px;color:rgba(255,255,255,0.5);margin-top:5px;text-transform:uppercase;letter-spacing:0.7px;}
- 
-/* CONTENT */
+
 .content{display:grid;grid-template-columns:355px 1fr;gap:16px;padding:1.25rem 1.75rem 2rem;align-items:start;}
- 
-/* FORM CARD */
-.form-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+
+.form-card,.table-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
 .card-hdr{padding:1rem 1.25rem 0.85rem;border-bottom:1px solid var(--gray3);display:flex;align-items:center;gap:10px;}
 .card-hdr .hicon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .card-hdr .hicon svg{width:15px;height:15px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.hicon-blue{background:var(--blue-light);} .hicon-blue svg{stroke:var(--blue-accent);}
-.hicon-purple{background:var(--purple-light);} .hicon-purple svg{stroke:var(--purple);}
+.hicon-blue{background:var(--blue-light);}.hicon-blue svg{stroke:var(--blue-accent);}
+.hicon-purple{background:var(--purple-light);}.hicon-purple svg{stroke:var(--purple);}
 .card-hdr h2{font-size:14px;font-weight:600;color:var(--gray7);}
 .card-hdr p{font-size:11px;color:var(--gray4);}
 .form-body{padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:13px;}
@@ -85,10 +83,9 @@ input:focus,select:focus{outline:none;border-color:var(--blue-accent);box-shadow
 .btn-submit{width:100%;padding:11px;font-size:14px;font-weight:700;background:linear-gradient(135deg,var(--blue-accent),#1d4ed8);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:opacity 0.15s,transform 0.1s;}
 .btn-submit:hover{opacity:0.92;}
 .btn-submit:active{transform:scale(0.99);}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed;}
 .err{font-size:11px;color:var(--red);margin-top:3px;display:none;}
- 
-/* TABLE CARD */
-.table-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+
 .table-header{padding:1rem 1.25rem;border-bottom:1px solid var(--gray3);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 .filter-bar{display:flex;gap:8px;padding:0.85rem 1.25rem;border-bottom:1px solid var(--gray3);background:var(--gray1);flex-wrap:wrap;}
 .filter-bar input{flex:1;min-width:160px;font-size:13px;padding:7px 10px;}
@@ -102,8 +99,8 @@ tr:last-child td{border-bottom:none;}
 tbody tr:hover td{background:#f8faff;}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600;}
 .badge::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.b-qr{background:var(--blue-light);color:#1d4ed8;} .b-qr::before{background:#2563EB;}
-.b-pos{background:var(--teal-light);color:#0f766e;} .b-pos::before{background:var(--teal);}
+.b-qr{background:var(--blue-light);color:#1d4ed8;}.b-qr::before{background:#2563EB;}
+.b-pos{background:var(--teal-light);color:#0f766e;}.b-pos::before{background:var(--teal);}
 .code-cell{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:500;color:var(--gray7);background:var(--gray2);padding:3px 8px;border-radius:5px;display:inline-block;}
 .pending-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;background:var(--amber-light);color:var(--amber);border:1px dashed #fbbf24;}
 .oficina-tag{font-size:11px;background:var(--purple-light);color:var(--purple);padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap;}
@@ -120,7 +117,14 @@ tbody tr:hover td{background:#f8faff;}
 .edit-btn svg{width:13px;height:13px;stroke:var(--blue-accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .actions-cell{display:flex;gap:5px;align-items:center;}
 .num-badge{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:var(--gray3);border-radius:50%;font-size:11px;font-weight:600;color:var(--gray5);}
- 
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;color:#fff;z-index:9999;opacity:0;transform:translateY(10px);transition:opacity 0.25s,transform 0.25s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.success{background:#16A34A;}
+.toast.error{background:#DC2626;}
+.toast.info{background:#2563EB;}
+
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.55);backdrop-filter:blur(3px);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.open{display:flex;}
@@ -139,15 +143,16 @@ tbody tr:hover td{background:#f8faff;}
 .btn-save-modal:hover{opacity:0.9;}
 .modal-code-tag{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;background:var(--gray2);padding:6px 12px;border-radius:8px;color:var(--gray7);border:1px solid var(--gray3);}
 .info-edit{display:flex;align-items:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:8px 11px;font-size:12px;color:#1e40af;}
- 
-/* RESPONSIVE */
+
 @media(max-width:900px){.content{grid-template-columns:1fr;}.stats-row{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:500px){.topbar{padding:0 1rem;}.stats-row{grid-template-columns:1fr 1fr;padding:1rem;}.content{padding:1rem;}.filter-bar{flex-wrap:wrap;}}
 </style>
 </head>
 <body>
+
+<div class="toast" id="toast"></div>
+
 <div class="dash">
- 
   <!-- TOP BAR -->
   <div class="topbar">
     <div class="topbar-left">
@@ -156,52 +161,51 @@ tbody tr:hover td{background:#f8faff;}
       </div>
       <div>
         <h1>Inventario QR y POS</h1>
-        <p>Panel de control de equipos</p>
+        <p>Panel de control de equipos · inventario-88244</p>
       </div>
     </div>
     <div class="topbar-right">
+      <div class="sync-pill">
+        <span class="sync-dot loading" id="sync-dot"></span>
+        <span class="sync-label" id="sync-label">Conectando...</span>
+      </div>
       <div class="date-pill" id="fecha-hoy"></div>
     </div>
   </div>
- 
+
   <!-- STATS -->
   <div class="stats-row">
     <div class="stat-card s-blue">
       <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div>
-      <div class="stat-val" id="st-total">0</div>
+      <div class="stat-val" id="st-total">—</div>
       <div class="stat-lbl">Total registros</div>
     </div>
     <div class="stat-card s-teal">
       <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 17h1"/></svg></div>
-      <div class="stat-val" id="st-qr">0</div>
+      <div class="stat-val" id="st-qr">—</div>
       <div class="stat-lbl">QR Parlante</div>
     </div>
     <div class="stat-card s-amber">
       <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
-      <div class="stat-val" id="st-pos">0</div>
+      <div class="stat-val" id="st-pos">—</div>
       <div class="stat-lbl">POS</div>
     </div>
     <div class="stat-card s-orange">
       <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-      <div class="stat-val" id="st-pend">0</div>
+      <div class="stat-val" id="st-pend">—</div>
       <div class="stat-lbl">Sin activar</div>
     </div>
   </div>
- 
+
   <!-- CONTENT -->
   <div class="content">
- 
     <!-- FORM -->
     <div class="form-card">
       <div class="card-hdr">
         <div class="hicon hicon-blue"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
-        <div>
-          <h2>Nuevo registro</h2>
-          <p>Completa los campos requeridos</p>
-        </div>
+        <div><h2>Nuevo registro</h2><p>Completa los campos requeridos</p></div>
       </div>
       <div class="form-body">
- 
         <div>
           <label>Tipo de equipo</label>
           <div class="type-toggle">
@@ -209,13 +213,11 @@ tbody tr:hover td{background:#f8faff;}
             <button class="tt-btn" id="btn-pos" onclick="setType('POS')">POS</button>
           </div>
         </div>
- 
         <div>
           <label>Código</label>
           <input type="text" id="f-codigo" placeholder="Ej. QR-00001 / C0140758" />
           <div class="err" id="err-codigo">Este campo es requerido</div>
         </div>
- 
         <div>
           <label>Responsable</label>
           <select id="f-resp">
@@ -238,27 +240,23 @@ tbody tr:hover td{background:#f8faff;}
           </select>
           <div class="err" id="err-resp">Selecciona un responsable</div>
         </div>
- 
         <div>
           <label>Fecha de registro</label>
           <input type="date" id="f-registro" />
           <div class="err" id="err-registro">Este campo es requerido</div>
         </div>
- 
         <div>
           <label>Fecha de salida <span class="lbl-optional">— opcional</span></label>
           <input type="date" id="f-salida" class="input-optional" />
         </div>
- 
         <div>
           <label>Fecha de activación <span class="lbl-optional">— opcional, agregar después</span></label>
           <input type="date" id="f-activ" class="input-optional" />
           <div class="activ-note">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            Puedes dejarlo vacío. Luego usa el botón ✏️ para asignar responsable y fecha de activación.
+            Puedes dejarlo vacío. Usa el botón ✏️ para editar cuando se active.
           </div>
         </div>
- 
         <div>
           <label>Cantidad</label>
           <div class="qty-box">
@@ -267,11 +265,10 @@ tbody tr:hover td{background:#f8faff;}
             <div class="qty-dot"></div>
           </div>
         </div>
- 
-        <button class="btn-submit" onclick="addRow()">+ Agregar al inventario</button>
+        <button class="btn-submit" id="btn-add" onclick="addRow()">+ Agregar al inventario</button>
       </div>
     </div>
- 
+
     <!-- TABLE -->
     <div class="table-card">
       <div class="table-header">
@@ -281,7 +278,7 @@ tbody tr:hover td{background:#f8faff;}
           </div>
           <div>
             <h2>Registros de inventario</h2>
-            <p id="count-label">0 registros en total</p>
+            <p id="count-label">Cargando datos...</p>
           </div>
         </div>
       </div>
@@ -302,26 +299,21 @@ tbody tr:hover td{background:#f8faff;}
         <table>
           <thead>
             <tr>
-              <th>#</th>
-              <th>Tipo</th>
-              <th>Código</th>
-              <th>Responsable</th>
-              <th>F. Registro</th>
-              <th>F. Salida</th>
-              <th>F. Activación</th>
-              <th>Cant.</th>
-              <th>Acciones</th>
+              <th>#</th><th>Tipo</th><th>Código</th><th>Responsable</th>
+              <th>F. Registro</th><th>F. Salida</th><th>F. Activación</th>
+              <th>Cant.</th><th>Acciones</th>
             </tr>
           </thead>
-          <tbody id="tbody"></tbody>
+          <tbody id="tbody">
+            <tr><td colspan="9" style="text-align:center;padding:2rem;color:#94A3B8;">⏳ Cargando datos desde Firebase...</td></tr>
+          </tbody>
         </table>
       </div>
     </div>
- 
   </div>
 </div>
- 
-<!-- ===== MODAL EDITAR ===== -->
+
+<!-- MODAL EDITAR -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-hdr">
@@ -332,12 +324,8 @@ tbody tr:hover td{background:#f8faff;}
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
-      <div class="info-edit">
-        💡 Cambia el responsable cuando el equipo sea entregado y registra la fecha de activación.
-      </div>
-      <div>
-        <div class="modal-code-tag" id="modal-code-tag">📦 —</div>
-      </div>
+      <div class="info-edit">💡 Cambia el responsable cuando el equipo sea entregado y registra la fecha de activación.</div>
+      <div class="modal-code-tag" id="modal-code-tag">📦 —</div>
       <div>
         <label>Tipo de equipo</label>
         <div class="type-toggle">
@@ -345,10 +333,7 @@ tbody tr:hover td{background:#f8faff;}
           <button class="tt-btn" id="m-btn-pos" onclick="setModalType('POS')">POS</button>
         </div>
       </div>
-      <div>
-        <label>Código</label>
-        <input type="text" id="m-codigo" />
-      </div>
+      <div><label>Código</label><input type="text" id="m-codigo" /></div>
       <div>
         <label>Responsable</label>
         <select id="m-resp">
@@ -371,14 +356,8 @@ tbody tr:hover td{background:#f8faff;}
         </select>
       </div>
       <div class="row2">
-        <div>
-          <label>Fecha de registro</label>
-          <input type="date" id="m-registro" />
-        </div>
-        <div>
-          <label>Fecha de salida</label>
-          <input type="date" id="m-salida" />
-        </div>
+        <div><label>Fecha de registro</label><input type="date" id="m-registro" /></div>
+        <div><label>Fecha de salida</label><input type="date" id="m-salida" /></div>
       </div>
       <div>
         <label>Fecha de activación <span class="lbl-optional">— vacío si aún no se activa</span></label>
@@ -391,47 +370,134 @@ tbody tr:hover td{background:#f8faff;}
     </div>
   </div>
 </div>
- 
+
 <script>
-  // ── ESTADO ──────────────────────────────────────────────
-  let records   = JSON.parse(localStorage.getItem('inventario_v2')) || [];
+  // ════════════════════════════════════════════════════
+  // 🔥 FIRESTORE — proyecto inventario-88244
+  // ════════════════════════════════════════════════════
+  const PROJECT_ID = 'inventario-88244';
+  const COLLECTION = 'inventario';
+  const BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}`;
+
+  // ── Convertir objeto JS → formato Firestore ──────────
+  function toFS(obj) {
+    const fields = {};
+    for (const [k, v] of Object.entries(obj)) {
+      if (typeof v === 'number')      fields[k] = { integerValue: String(v) };
+      else if (typeof v === 'boolean') fields[k] = { booleanValue: v };
+      else                             fields[k] = { stringValue: String(v ?? '') };
+    }
+    return { fields };
+  }
+
+  // ── Convertir documento Firestore → objeto JS ────────
+  function fromFS(doc) {
+    const obj = {};
+    for (const [k, v] of Object.entries(doc.fields || {})) {
+      if ('stringValue'  in v) obj[k] = v.stringValue;
+      else if ('integerValue' in v) obj[k] = parseInt(v.integerValue);
+      else if ('booleanValue' in v) obj[k] = v.booleanValue;
+    }
+    obj.fbKey = doc.name.split('/').pop();
+    return obj;
+  }
+
+  // ── Operaciones Firestore REST ───────────────────────
+  async function fsGetAll() {
+    const res  = await fetch(BASE);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error?.message || 'Error al leer');
+    return (data.documents || []).map(fromFS);
+  }
+
+  async function fsAdd(record) {
+    const res  = await fetch(BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(toFS(record))
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error?.message || 'Error al crear');
+    return data.name.split('/').pop();
+  }
+
+  async function fsPatch(fbKey, fields) {
+    const mask = Object.keys(fields).map(k => `updateMask.fieldPaths=${k}`).join('&');
+    const res  = await fetch(`${BASE}/${fbKey}?${mask}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(toFS(fields))
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error?.message || 'Error al actualizar');
+  }
+
+  async function fsDelete(fbKey) {
+    const res = await fetch(`${BASE}/${fbKey}`, { method: 'DELETE' });
+    if (!res.ok) { const d = await res.json(); throw new Error(d.error?.message || 'Error al eliminar'); }
+  }
+
+  // ════════════════════════════════════════════════════
+  // ESTADO LOCAL
+  // ════════════════════════════════════════════════════
+  let records   = [];
   let ctype     = 'QR';
   let editId    = null;
   let modalType = 'QR';
- 
-  // ── FECHA HOY ────────────────────────────────────────────
+
+  // Fecha hoy
   const today = new Date();
   document.getElementById('fecha-hoy').textContent =
     today.toLocaleDateString('es-PE', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
   const iso = today.toISOString().split('T')[0];
   document.getElementById('f-registro').value = iso;
- 
-  // ── HELPERS ──────────────────────────────────────────────
-  function guardar() {
-    localStorage.setItem('inventario_v2', JSON.stringify(records));
-  }
- 
+
+  // ── UI helpers ───────────────────────────────────────
   function fmtDate(d) {
     if (!d) return '—';
     const [y, m, dd] = d.split('-');
-    return dd + '/' + m + '/' + y;
+    return `${dd}/${m}/${y}`;
   }
- 
-  // ── TIPO (formulario) ─────────────────────────────────────
+
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast ${type} show`;
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function setSyncStatus(state) {
+    const dot   = document.getElementById('sync-dot');
+    const label = document.getElementById('sync-label');
+    const map   = {
+      loading: ['loading', 'Sincronizando...'],
+      online:  ['online',  'En línea ✓'],
+      offline: ['offline', 'Sin conexión']
+    };
+    const [cls, txt] = map[state] || map.offline;
+    dot.className   = `sync-dot ${cls}`;
+    label.textContent = txt;
+  }
+
+  function setBusy(busy) {
+    const btn = document.getElementById('btn-add');
+    btn.disabled    = busy;
+    btn.textContent = busy ? '⏳ Guardando...' : '+ Agregar al inventario';
+  }
+
+  // ── Tipo ─────────────────────────────────────────────
   function setType(t) {
     ctype = t;
-    document.getElementById('btn-qr').className = 'tt-btn' + (t === 'QR' ? ' on-qr' : '');
-    document.getElementById('btn-pos').className = 'tt-btn' + (t === 'POS' ? ' on-pos' : '');
+    document.getElementById('btn-qr').className = 'tt-btn' + (t==='QR' ? ' on-qr' : '');
+    document.getElementById('btn-pos').className = 'tt-btn' + (t==='POS' ? ' on-pos' : '');
   }
- 
-  // ── TIPO (modal) ──────────────────────────────────────────
   function setModalType(t) {
     modalType = t;
-    document.getElementById('m-btn-qr').className = 'tt-btn' + (t === 'QR' ? ' on-qr' : '');
-    document.getElementById('m-btn-pos').className = 'tt-btn' + (t === 'POS' ? ' on-pos' : '');
+    document.getElementById('m-btn-qr').className = 'tt-btn' + (t==='QR' ? ' on-qr' : '');
+    document.getElementById('m-btn-pos').className = 'tt-btn' + (t==='POS' ? ' on-pos' : '');
   }
- 
-  // ── VALIDAR FORMULARIO ────────────────────────────────────
+
+  // ── Validar ──────────────────────────────────────────
   function validate() {
     let ok = true;
     [['codigo','err-codigo'], ['resp','err-resp'], ['registro','err-registro']].forEach(([f, e]) => {
@@ -442,11 +508,13 @@ tbody tr:hover td{background:#f8faff;}
     });
     return ok;
   }
- 
-  // ── AGREGAR REGISTRO ──────────────────────────────────────
-  function addRow() {
+
+  // ── AGREGAR ──────────────────────────────────────────
+  async function addRow() {
     if (!validate()) return;
-    records.push({
+    setBusy(true);
+    setSyncStatus('loading');
+    const record = {
       id:       Date.now(),
       tipo:     ctype,
       codigo:   document.getElementById('f-codigo').value.trim(),
@@ -455,43 +523,68 @@ tbody tr:hover td{background:#f8faff;}
       salida:   document.getElementById('f-salida').value  || '',
       activ:    document.getElementById('f-activ').value   || '',
       cant:     1
-    });
-    guardar();
-    // limpiar campos
-    document.getElementById('f-codigo').value   = '';
-    document.getElementById('f-resp').value     = '';
-    document.getElementById('f-registro').value = iso;
-    document.getElementById('f-salida').value   = '';
-    document.getElementById('f-activ').value    = '';
-    updateStats();
-    renderTable();
+    };
+    try {
+      const fbKey  = await fsAdd(record);
+      record.fbKey = fbKey;
+      records.push(record);
+      // limpiar formulario
+      ['f-codigo','f-resp','f-salida','f-activ'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('f-registro').value = iso;
+      updateStats(); renderTable();
+      showToast('✅ Registro guardado y compartido');
+      setSyncStatus('online');
+    } catch(e) {
+      showToast('❌ Error: ' + e.message, 'error');
+      setSyncStatus('offline');
+    }
+    setBusy(false);
   }
- 
-  // ── GUARDAR ACTIVACIÓN DIRECTO EN TABLA ───────────────────
-  function saveActiv(id) {
-    const val = document.getElementById('ai-' + id).value;
+
+  // ── GUARDAR ACTIVACIÓN RÁPIDA ────────────────────────
+  async function saveActiv(id) {
+    const val = document.getElementById('ai-' + id)?.value;
+    if (!val) { showToast('Selecciona una fecha primero', 'info'); return; }
     const rec = records.find(r => r.id === id);
-    if (rec) { rec.activ = val; guardar(); }
-    updateStats();
-    renderTable();
+    if (!rec) return;
+    setSyncStatus('loading');
+    try {
+      await fsPatch(rec.fbKey, { activ: val });
+      rec.activ = val;
+      updateStats(); renderTable();
+      showToast('✅ Fecha de activación guardada');
+      setSyncStatus('online');
+    } catch(e) {
+      showToast('❌ Error al actualizar: ' + e.message, 'error');
+      setSyncStatus('offline');
+    }
   }
- 
-  // ── ELIMINAR ──────────────────────────────────────────────
-  function delRow(id) {
-    if (!confirm('¿Eliminar este registro? Esta acción no se puede deshacer.')) return;
-    records = records.filter(r => r.id !== id);
-    guardar();
-    updateStats();
-    renderTable();
+
+  // ── ELIMINAR ─────────────────────────────────────────
+  async function delRow(id) {
+    if (!confirm('¿Eliminar este registro? No se puede deshacer.')) return;
+    const rec = records.find(r => r.id === id);
+    if (!rec) return;
+    setSyncStatus('loading');
+    try {
+      await fsDelete(rec.fbKey);
+      records = records.filter(r => r.id !== id);
+      updateStats(); renderTable();
+      showToast('🗑️ Registro eliminado');
+      setSyncStatus('online');
+    } catch(e) {
+      showToast('❌ Error al eliminar: ' + e.message, 'error');
+      setSyncStatus('offline');
+    }
   }
- 
-  // ── ABRIR MODAL EDITAR ────────────────────────────────────
+
+  // ── MODAL EDITAR ─────────────────────────────────────
   function openEdit(id) {
     const r = records.find(x => x.id === id);
     if (!r) return;
     editId = id;
     document.getElementById('modal-subtitle').textContent = 'Equipo: ' + r.codigo;
-    document.getElementById('modal-code-tag').textContent = '📦 ' + r.codigo + ' — ' + (r.tipo === 'QR' ? 'QR Parlante' : 'POS');
+    document.getElementById('modal-code-tag').textContent = '📦 ' + r.codigo + ' — ' + (r.tipo==='QR'?'QR Parlante':'POS');
     document.getElementById('m-codigo').value   = r.codigo;
     document.getElementById('m-resp').value     = r.resp;
     document.getElementById('m-registro').value = r.registro || '';
@@ -500,59 +593,63 @@ tbody tr:hover td{background:#f8faff;}
     setModalType(r.tipo);
     document.getElementById('modal-overlay').classList.add('open');
   }
- 
+
   function closeModal() {
     document.getElementById('modal-overlay').classList.remove('open');
     editId = null;
   }
- 
-  // ── GUARDAR EDICIÓN ───────────────────────────────────────
-  function saveEdit() {
+
+  async function saveEdit() {
     const r = records.find(x => x.id === editId);
     if (!r) return;
-    r.tipo     = modalType;
-    r.codigo   = document.getElementById('m-codigo').value.trim();
-    r.resp     = document.getElementById('m-resp').value;
-    r.registro = document.getElementById('m-registro').value;
-    r.salida   = document.getElementById('m-salida').value;
-    r.activ    = document.getElementById('m-activ').value;
-    guardar();
-    closeModal();
-    updateStats();
-    renderTable();
+    setSyncStatus('loading');
+    const updated = {
+      tipo:     modalType,
+      codigo:   document.getElementById('m-codigo').value.trim(),
+      resp:     document.getElementById('m-resp').value,
+      registro: document.getElementById('m-registro').value,
+      salida:   document.getElementById('m-salida').value,
+      activ:    document.getElementById('m-activ').value
+    };
+    try {
+      await fsPatch(r.fbKey, updated);
+      Object.assign(r, updated);
+      closeModal();
+      updateStats(); renderTable();
+      showToast('✅ Registro actualizado correctamente');
+      setSyncStatus('online');
+    } catch(e) {
+      showToast('❌ Error: ' + e.message, 'error');
+      setSyncStatus('offline');
+    }
   }
- 
-  // cerrar modal al hacer clic fuera
-  document.getElementById('modal-overlay').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
+
+  document.getElementById('modal-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
   });
- 
-  // ── ESTADÍSTICAS ──────────────────────────────────────────
+
+  // ── STATS ────────────────────────────────────────────
   function updateStats() {
     document.getElementById('st-total').textContent = records.length;
-    document.getElementById('st-qr').textContent    = records.filter(r => r.tipo === 'QR').length;
-    document.getElementById('st-pos').textContent   = records.filter(r => r.tipo === 'POS').length;
+    document.getElementById('st-qr').textContent    = records.filter(r => r.tipo==='QR').length;
+    document.getElementById('st-pos').textContent   = records.filter(r => r.tipo==='POS').length;
     document.getElementById('st-pend').textContent  = records.filter(r => !r.activ).length;
   }
- 
-  // ── RENDERIZAR TABLA ──────────────────────────────────────
+
+  // ── TABLA ────────────────────────────────────────────
   function renderTable() {
     const q  = document.getElementById('search').value.toLowerCase();
     const ft = document.getElementById('filter-type').value;
     const fa = document.getElementById('filter-activ').value;
- 
     const fil = records.filter(r => {
       const m  = r.codigo.toLowerCase().includes(q) || r.resp.toLowerCase().includes(q);
-      const tm = ft ? r.tipo === ft : true;
-      const am = fa === 'pending' ? !r.activ : fa === 'done' ? !!r.activ : true;
+      const tm = ft ? r.tipo===ft : true;
+      const am = fa==='pending' ? !r.activ : fa==='done' ? !!r.activ : true;
       return m && tm && am;
     });
- 
     document.getElementById('count-label').textContent =
-      records.length + ' registro' + (records.length !== 1 ? 's' : '') + ' en total';
- 
+      `${records.length} registro${records.length!==1?'s':''} en total`;
     const tbody = document.getElementById('tbody');
- 
     if (fil.length === 0) {
       tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:3rem;color:#94A3B8;">
         <div style="font-size:32px;margin-bottom:8px;">📋</div>
@@ -560,13 +657,11 @@ tbody tr:hover td{background:#f8faff;}
       </td></tr>`;
       return;
     }
- 
     tbody.innerHTML = fil.map((r, i) => {
       const esOficina = r.resp === 'OFICINA CENTRAL COMERCIAL';
       const respCell  = esOficina
         ? `<span class="oficina-tag">📦 Oficina Central</span>`
         : `<span style="font-size:12px;">${r.resp}</span>`;
- 
       const activCell = r.activ
         ? `<span style="font-size:12.5px;color:#16A34A;font-weight:600;">✓ ${fmtDate(r.activ)}</span>`
         : `<div class="activ-inline">
@@ -576,10 +671,9 @@ tbody tr:hover td{background:#f8faff;}
                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
              </button>
            </div>`;
- 
       return `<tr>
-        <td><span class="num-badge">${i + 1}</span></td>
-        <td><span class="badge ${r.tipo === 'QR' ? 'b-qr' : 'b-pos'}">${r.tipo === 'QR' ? 'QR Parlante' : 'POS'}</span></td>
+        <td><span class="num-badge">${i+1}</span></td>
+        <td><span class="badge ${r.tipo==='QR'?'b-qr':'b-pos'}">${r.tipo==='QR'?'QR Parlante':'POS'}</span></td>
         <td><span class="code-cell">${r.codigo}</span></td>
         <td>${respCell}</td>
         <td style="white-space:nowrap;font-size:12.5px;">${fmtDate(r.registro)}</td>
@@ -588,7 +682,7 @@ tbody tr:hover td{background:#f8faff;}
         <td style="text-align:center;font-weight:600;">1</td>
         <td>
           <div class="actions-cell">
-            <button class="edit-btn" onclick="openEdit(${r.id})" title="Editar registro">
+            <button class="edit-btn" onclick="openEdit(${r.id})" title="Editar">
               <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
             <button class="del-btn" onclick="delRow(${r.id})" title="Eliminar">
@@ -599,11 +693,24 @@ tbody tr:hover td{background:#f8faff;}
       </tr>`;
     }).join('');
   }
- 
-  // ── INICIO ────────────────────────────────────────────────
-  window.onload = () => {
-    updateStats();
-    renderTable();
+
+  // ── SINCRONIZACIÓN AUTOMÁTICA ─────────────────────────
+  async function syncData() {
+    try {
+      records = await fsGetAll();
+      setSyncStatus('online');
+      updateStats();
+      renderTable();
+    } catch(e) {
+      setSyncStatus('offline');
+      document.getElementById('count-label').textContent = 'Error de conexión — reintentando...';
+    }
+  }
+
+  // ── INICIO ────────────────────────────────────────────
+  window.onload = async () => {
+    await syncData();                    // carga inicial
+    setInterval(syncData, 10000);        // refresca cada 10 segundos
   };
 </script>
 </body>
