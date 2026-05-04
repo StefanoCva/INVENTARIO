@@ -145,7 +145,7 @@ tbody tr:hover td{background:#f8faff;}
 <body>
 <div class="toast" id="toast"></div>
 <div class="dash">
- 
+
   <div class="topbar">
     <div class="topbar-left">
       <div class="logo-box">
@@ -168,7 +168,7 @@ tbody tr:hover td{background:#f8faff;}
       <div class="date-pill" id="fecha-hoy"></div>
     </div>
   </div>
- 
+
   <div class="stats-row">
     <div class="stat-card s-blue">
       <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div>
@@ -191,7 +191,7 @@ tbody tr:hover td{background:#f8faff;}
       <div class="stat-lbl">Sin activar</div>
     </div>
   </div>
- 
+
   <div class="content">
     <div class="form-card">
       <div class="card-hdr">
@@ -261,7 +261,7 @@ tbody tr:hover td{background:#f8faff;}
         <button class="btn-submit" id="btn-add" onclick="addRow()">+ Agregar al inventario</button>
       </div>
     </div>
- 
+
     <div class="table-card">
       <div class="table-header">
         <div style="display:flex;align-items:center;gap:10px;">
@@ -304,7 +304,7 @@ tbody tr:hover td{background:#f8faff;}
     </div>
   </div>
 </div>
- 
+
 <!-- MODAL EDITAR -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
@@ -362,7 +362,7 @@ tbody tr:hover td{background:#f8faff;}
     </div>
   </div>
 </div>
- 
+
 <script>
   // ══════════════════════════════════════════════════════
   // SUPABASE CONFIG — sin límite de lecturas diarias 🚀
@@ -377,7 +377,7 @@ tbody tr:hover td{background:#f8faff;}
     'Content-Type':  'application/json',
     'Prefer':        'return=representation'
   };
- 
+
   // ── Supabase REST helpers ─────────────────────────────
   async function sbGetAll() {
     // Supabase devuelve hasta 1000 por defecto; usamos range para traer todos
@@ -394,7 +394,7 @@ tbody tr:hover td{background:#f8faff;}
     }
     return all;
   }
- 
+
   async function sbInsert(record) {
     const res  = await fetch(API, {
       method: 'POST', headers: HEADS,
@@ -404,7 +404,7 @@ tbody tr:hover td{background:#f8faff;}
     if (!res.ok) throw new Error(data.message || JSON.stringify(data));
     return Array.isArray(data) ? data[0] : data;
   }
- 
+
   async function sbUpdate(id, fields) {
     const res  = await fetch(`${API}?id=eq.${id}`, {
       method: 'PATCH', headers: HEADS,
@@ -412,14 +412,14 @@ tbody tr:hover td{background:#f8faff;}
     });
     if (!res.ok) { const d = await res.json(); throw new Error(d.message || 'Error al actualizar'); }
   }
- 
+
   async function sbDelete(id) {
     const res = await fetch(`${API}?id=eq.${id}`, {
       method: 'DELETE', headers: HEADS
     });
     if (!res.ok) { const d = await res.json(); throw new Error(d.message || 'Error al eliminar'); }
   }
- 
+
   // ══════════════════════════════════════════════════════
   // ESTADO
   // ══════════════════════════════════════════════════════
@@ -427,26 +427,26 @@ tbody tr:hover td{background:#f8faff;}
   let ctype     = 'QR';
   let editId    = null;
   let modalType = 'QR';
- 
+
   const today = new Date();
   document.getElementById('fecha-hoy').textContent =
     today.toLocaleDateString('es-PE',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
   const iso = today.toISOString().split('T')[0];
   document.getElementById('f-registro').value = iso;
- 
+
   // ── UI helpers ────────────────────────────────────────
   function fmtDate(d) {
     if (!d) return '—';
     const [y,m,dd] = d.split('-');
     return `${dd}/${m}/${y}`;
   }
- 
+
   function showToast(msg, type='success') {
     const t = document.getElementById('toast');
     t.textContent = msg; t.className = `toast ${type} show`;
     setTimeout(()=>t.classList.remove('show'), 3000);
   }
- 
+
   function setSyncStatus(state) {
     const dot = document.getElementById('sync-dot');
     const lbl = document.getElementById('sync-label');
@@ -458,25 +458,25 @@ tbody tr:hover td{background:#f8faff;}
     const [cls,txt] = map[state]||map.offline;
     dot.className = `sync-dot ${cls}`; lbl.textContent = txt;
   }
- 
+
   function setBusy(busy) {
     const btn = document.getElementById('btn-add');
     btn.disabled = busy;
     btn.textContent = busy ? '⏳ Guardando...' : '+ Agregar al inventario';
   }
- 
+
   function setType(t) {
     ctype = t;
     document.getElementById('btn-qr').className = 'tt-btn'+(t==='QR'?' on-qr':'');
     document.getElementById('btn-pos').className = 'tt-btn'+(t==='POS'?' on-pos':'');
   }
- 
+
   function setModalType(t) {
     modalType = t;
     document.getElementById('m-btn-qr').className = 'tt-btn'+(t==='QR'?' on-qr':'');
     document.getElementById('m-btn-pos').className = 'tt-btn'+(t==='POS'?' on-pos':'');
   }
- 
+
   function validate() {
     let ok = true;
     [['codigo','err-codigo'],['resp','err-resp'],['registro','err-registro']].forEach(([f,e])=>{
@@ -485,7 +485,7 @@ tbody tr:hover td{background:#f8faff;}
     });
     return ok;
   }
- 
+
   // ── SYNC ─────────────────────────────────────────────
   async function syncData() {
     setSyncStatus('loading');
@@ -500,12 +500,12 @@ tbody tr:hover td{background:#f8faff;}
     }
     document.getElementById('btn-refresh').classList.remove('spinning');
   }
- 
+
   async function manualSync() {
     await syncData();
     showToast('✅ Datos actualizados');
   }
- 
+
   // ── AGREGAR ───────────────────────────────────────────
   async function addRow() {
     if (!validate()) return;
@@ -534,7 +534,7 @@ tbody tr:hover td{background:#f8faff;}
     }
     setBusy(false);
   }
- 
+
   // ── ACTIVACIÓN RÁPIDA ────────────────────────────────
   async function saveActiv(id) {
     const val = document.getElementById('ai-'+id)?.value;
@@ -550,7 +550,7 @@ tbody tr:hover td{background:#f8faff;}
       setSyncStatus('online');
     } catch(e) { showToast('❌ Error: '+e.message,'error'); setSyncStatus('offline'); }
   }
- 
+
   // ── ELIMINAR ─────────────────────────────────────────
   async function delRow(id) {
     if (!confirm('¿Eliminar este registro? No se puede deshacer.')) return;
@@ -563,7 +563,7 @@ tbody tr:hover td{background:#f8faff;}
       setSyncStatus('online');
     } catch(e) { showToast('❌ Error: '+e.message,'error'); setSyncStatus('offline'); }
   }
- 
+
   // ── MODAL ─────────────────────────────────────────────
   function openEdit(id) {
     const r = records.find(x=>x.id===id); if (!r) return;
@@ -578,12 +578,12 @@ tbody tr:hover td{background:#f8faff;}
     setModalType(r.tipo);
     document.getElementById('modal-overlay').classList.add('open');
   }
- 
+
   function closeModal() {
     document.getElementById('modal-overlay').classList.remove('open');
     editId = null;
   }
- 
+
   async function saveEdit() {
     const r = records.find(x=>x.id===editId); if (!r) return;
     setSyncStatus('loading');
@@ -603,11 +603,11 @@ tbody tr:hover td{background:#f8faff;}
       setSyncStatus('online');
     } catch(e) { showToast('❌ Error: '+e.message,'error'); setSyncStatus('offline'); }
   }
- 
+
   document.getElementById('modal-overlay').addEventListener('click', e=>{
     if(e.target===document.getElementById('modal-overlay')) closeModal();
   });
- 
+
   // ── STATS ─────────────────────────────────────────────
   function updateStats() {
     document.getElementById('st-total').textContent = records.length;
@@ -615,7 +615,7 @@ tbody tr:hover td{background:#f8faff;}
     document.getElementById('st-pos').textContent   = records.filter(r=>r.tipo==='POS').length;
     document.getElementById('st-pend').textContent  = records.filter(r=>!r.activ).length;
   }
- 
+
   // ── TABLA ─────────────────────────────────────────────
   function renderTable() {
     const q  = document.getElementById('search').value.toLowerCase();
@@ -668,7 +668,7 @@ tbody tr:hover td{background:#f8faff;}
       </tr>`;
     }).join('');
   }
- 
+
   // ── INICIO — carga una vez, sin polling agresivo ──────
   window.onload = () => syncData();
 </script>
